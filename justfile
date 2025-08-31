@@ -1,4 +1,4 @@
 @_default: run
 
 @run:
-  ./main.nu
+  cargo run
