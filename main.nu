@@ -1,13 +1,15 @@
 #!/usr/bin/env nu
 
 def main [] {
-  let base = "https://lichess.org/api/"
-  let path = "account"
-
-  let endpoint = $base ++ $path
   let header = $"Authorization: Bearer ($env.LICHESS_API_TOKEN)"
 
-  curl $endpoint -H $header
+  let url = {
+    scheme: https
+    host: lichess.org
+    path: api/account
+  }
+
+  curl ($url | url join) -H $header
   | from json
   | explore
 }
