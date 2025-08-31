@@ -16,6 +16,12 @@ pub enum PieceShape {
 
 #[derive(Clone, Copy)]
 pub struct Piece {
-    color: PieceColor,
-    shape: PieceShape,
+    pub color: PieceColor,
+    pub shape: PieceShape,
+}
+
+impl Piece {
+    pub fn new(color: PieceColor, shape: PieceShape) -> Self {
+        Self { color, shape }
+    }
 }
