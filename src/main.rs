@@ -5,9 +5,6 @@ fn main() {
     let pawns = "         ";
     let pieces = "         ";
 
-    println!("{}", pawns.on_blue());
-    println!("{}", pieces.white());
-
     println!();
-    println!("{}", Board::new());
+    println!("{}", Board::default());
 }
