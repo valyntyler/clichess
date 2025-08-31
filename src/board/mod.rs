@@ -8,7 +8,16 @@ pub struct Board([[Option<Piece>; 8]; 8]);
 
 impl Default for Board {
     fn default() -> Self {
-        Self([[Some(Piece::new(PieceColor::Black, PieceShape::King)); 8]; 8])
+        Self([
+            [Some(Piece::new(PieceColor::Black, PieceShape::King)); 8],
+            [Some(Piece::new(PieceColor::Black, PieceShape::Pawn)); 8],
+            [None; 8],
+            [None; 8],
+            [None; 8],
+            [None; 8],
+            [Some(Piece::new(PieceColor::White, PieceShape::Pawn)); 8],
+            [Some(Piece::new(PieceColor::Black, PieceShape::King)); 8],
+        ])
     }
 }
 
@@ -16,11 +25,7 @@ impl Display for Board {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for (rank, row) in self.0.iter().enumerate() {
             for (file, piece) in row.iter().enumerate() {
-                let fg = if rank < 4 {
-                    Color::Black
-                } else {
-                    Color::BrightWhite
-                };
+                let fg = Color::Red;
 
                 let bg = if (rank + file) % 2 == 0 {
                     Color::BrightBlack
