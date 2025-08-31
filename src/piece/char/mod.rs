@@ -4,9 +4,9 @@ pub trait PieceChar {
     fn char(&self) -> char;
 }
 
-pub struct AsciiNotation(PieceShape);
-pub struct UnicodeNotation(PieceShape);
-pub struct NerdFontNotation(PieceShape);
+pub struct AsciiNotation(pub PieceShape);
+pub struct UnicodeNotation(pub PieceShape);
+pub struct NerdFontNotation(pub PieceShape);
 
 impl PieceChar for AsciiNotation {
     fn char(&self) -> char {
