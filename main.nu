@@ -1,17 +1,22 @@
 #!/usr/bin/env nu
 
-def main [] {
+def main [gameId: string] {
   let url = {
     scheme: https
     host: lichess.org
-    path: api/account
-  }
-  | url join
+    path: api/board/game/($gameId)/chat
+  } | url join
 
-  let headers = {
-    Authorization: $"Bearer ($env.LICHESS_API_TOKEN)"
+  let msg = {
+      room: "player"
+      text: "hello!"
   }
 
-  http get $url -H $headers
-  | explore
+  let headers = {Authorization: $"Bearer ($env.LICHESS_API_TOKEN)"}
+
+  (
+    http post $url $msg
+    --headers $headers
+    --content-type "application/x-www-form-urlencoded"
+  )
 }
