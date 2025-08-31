@@ -14,14 +14,32 @@ pub struct Board([[Option<Piece>; 8]; 8]);
 impl Default for Board {
     fn default() -> Self {
         Self([
-            [Some(Piece::new(PieceColor::Black, PieceShape::King)); 8],
+            [
+                Some(Piece::new(PieceColor::Black, PieceShape::Rook)),
+                Some(Piece::new(PieceColor::Black, PieceShape::Knight)),
+                Some(Piece::new(PieceColor::Black, PieceShape::Bishop)),
+                Some(Piece::new(PieceColor::Black, PieceShape::Queen)),
+                Some(Piece::new(PieceColor::Black, PieceShape::King)),
+                Some(Piece::new(PieceColor::Black, PieceShape::Bishop)),
+                Some(Piece::new(PieceColor::Black, PieceShape::Knight)),
+                Some(Piece::new(PieceColor::Black, PieceShape::Rook)),
+            ],
             [Some(Piece::new(PieceColor::Black, PieceShape::Pawn)); 8],
             [None; 8],
             [None; 8],
             [None; 8],
             [None; 8],
             [Some(Piece::new(PieceColor::White, PieceShape::Pawn)); 8],
-            [Some(Piece::new(PieceColor::Black, PieceShape::King)); 8],
+            [
+                Some(Piece::new(PieceColor::White, PieceShape::Rook)),
+                Some(Piece::new(PieceColor::White, PieceShape::Knight)),
+                Some(Piece::new(PieceColor::White, PieceShape::Bishop)),
+                Some(Piece::new(PieceColor::White, PieceShape::Queen)),
+                Some(Piece::new(PieceColor::White, PieceShape::King)),
+                Some(Piece::new(PieceColor::White, PieceShape::Bishop)),
+                Some(Piece::new(PieceColor::White, PieceShape::Knight)),
+                Some(Piece::new(PieceColor::White, PieceShape::Rook)),
+            ],
         ])
     }
 }
@@ -41,8 +59,8 @@ impl Display for Board {
                         .char()
                         .to_string()
                         .color(match piece.color {
-                            PieceColor::White => Color::Red,
-                            PieceColor::Black => Color::Blue,
+                            PieceColor::White => Color::BrightWhite,
+                            PieceColor::Black => Color::Black,
                         })
                 } else {
                     ColoredString::from(" ")
