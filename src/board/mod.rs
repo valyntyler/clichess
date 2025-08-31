@@ -1,0 +1,35 @@
+use std::fmt::Display;
+
+use colored::{Color, Colorize};
+
+use crate::piece::Piece;
+
+pub struct Board([[Option<Piece>; 8]; 8]);
+
+impl Board {
+    pub fn new() -> Self {
+        Board([[None; 8]; 8])
+    }
+}
+
+impl Display for Board {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for (rank, row) in self.0.iter().enumerate() {
+            for (file, piece) in row.iter().enumerate() {
+                let fg = if rank < 4 { Color::White } else { Color::Black };
+
+                let bg = if (rank + file) % 2 == 0 {
+                    Color::BrightBlack
+                } else {
+                    Color::BrightWhite
+                };
+
+                let square = "  ".color(fg).on_color(bg);
+
+                write!(f, "{}", square)?;
+            }
+            writeln!(f)?;
+        }
+        Ok(())
+    }
+}
