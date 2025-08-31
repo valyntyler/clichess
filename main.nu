@@ -15,8 +15,7 @@ def main [gameId: string] {
   let headers = {Authorization: $"Bearer ($env.LICHESS_API_TOKEN)"}
 
   (
-    http post $url $msg
+    http get $url
     --headers $headers
-    --content-type "application/x-www-form-urlencoded"
   )
 }
