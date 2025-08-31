@@ -2,7 +2,7 @@ use std::fmt::Display;
 
 use colored::{Color, Colorize};
 
-use crate::piece::{Piece, PieceColor, PieceShape};
+use crate::piece::{Piece, color::PieceColor, shape::PieceShape};
 
 pub struct Board([[Option<Piece>; 8]; 8]);
 

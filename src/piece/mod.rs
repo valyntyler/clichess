@@ -1,20 +1,10 @@
+pub mod color;
+pub mod shape;
+
 use std::fmt::Display;
 
-#[derive(Clone, Copy)]
-pub enum PieceColor {
-    White,
-    Black,
-}
-
-#[derive(Clone, Copy)]
-pub enum PieceShape {
-    Pawn,
-    Knight,
-    Bishop,
-    Rook,
-    Queen,
-    King,
-}
+use crate::piece::color::PieceColor;
+use crate::piece::shape::PieceShape;
 
 #[derive(Clone, Copy)]
 pub struct Piece {
