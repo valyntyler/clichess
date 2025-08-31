@@ -6,12 +6,6 @@ use crate::piece::{Piece, PieceColor, PieceShape};
 
 pub struct Board([[Option<Piece>; 8]; 8]);
 
-impl Board {
-    pub fn new() -> Self {
-        Board([[None; 8]; 8])
-    }
-}
-
 impl Default for Board {
     fn default() -> Self {
         Self([[Some(Piece::new(PieceColor::Black, PieceShape::King)); 8]; 8])
