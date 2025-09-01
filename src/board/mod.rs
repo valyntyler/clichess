@@ -13,33 +13,27 @@ pub struct Board([[Option<Piece>; 8]; 8]);
 
 impl Default for Board {
     fn default() -> Self {
+        let pawns = [PieceShape::Pawn; 8];
+        let pieces = [
+            PieceShape::Rook,
+            PieceShape::Knight,
+            PieceShape::Bishop,
+            PieceShape::Queen,
+            PieceShape::King,
+            PieceShape::Bishop,
+            PieceShape::Knight,
+            PieceShape::Rook,
+        ];
+
         Self([
-            [
-                Some(Piece::new(PieceColor::Black, PieceShape::Rook)),
-                Some(Piece::new(PieceColor::Black, PieceShape::Knight)),
-                Some(Piece::new(PieceColor::Black, PieceShape::Bishop)),
-                Some(Piece::new(PieceColor::Black, PieceShape::Queen)),
-                Some(Piece::new(PieceColor::Black, PieceShape::King)),
-                Some(Piece::new(PieceColor::Black, PieceShape::Bishop)),
-                Some(Piece::new(PieceColor::Black, PieceShape::Knight)),
-                Some(Piece::new(PieceColor::Black, PieceShape::Rook)),
-            ],
-            [Some(Piece::new(PieceColor::Black, PieceShape::Pawn)); 8],
+            pieces.map(|shape| Some(Piece::new(PieceColor::Black, shape))),
+            pawns.map(|shape| Some(Piece::new(PieceColor::Black, shape))),
             [None; 8],
             [None; 8],
             [None; 8],
             [None; 8],
-            [Some(Piece::new(PieceColor::White, PieceShape::Pawn)); 8],
-            [
-                Some(Piece::new(PieceColor::White, PieceShape::Rook)),
-                Some(Piece::new(PieceColor::White, PieceShape::Knight)),
-                Some(Piece::new(PieceColor::White, PieceShape::Bishop)),
-                Some(Piece::new(PieceColor::White, PieceShape::Queen)),
-                Some(Piece::new(PieceColor::White, PieceShape::King)),
-                Some(Piece::new(PieceColor::White, PieceShape::Bishop)),
-                Some(Piece::new(PieceColor::White, PieceShape::Knight)),
-                Some(Piece::new(PieceColor::White, PieceShape::Rook)),
-            ],
+            pawns.map(|shape| Some(Piece::new(PieceColor::White, shape))),
+            pieces.map(|shape| Some(Piece::new(PieceColor::White, shape))),
         ])
     }
 }
