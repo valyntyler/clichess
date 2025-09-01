@@ -1,24 +1,51 @@
-use color_eyre::Result;
-use crossterm::event::{self, Event};
-use ratatui::{DefaultTerminal, Frame};
+use crossterm::event::{DisableMouseCapture, EnableMouseCapture};
+use crossterm::terminal::{
+    EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode,
+};
+use ratatui::Terminal;
+use ratatui::backend::CrosstermBackend;
+use ratatui::widgets::{Block, Borders};
+use std::io;
+use tui_textarea::{Input, Key, TextArea};
 
-fn main() -> Result<()> {
-    color_eyre::install()?;
-    let terminal = ratatui::init();
-    let result = run(terminal);
-    ratatui::restore();
-    result
-}
+fn main() -> io::Result<()> {
+    let stdout = io::stdout();
+    let mut stdout = stdout.lock();
 
-fn run(mut terminal: DefaultTerminal) -> Result<()> {
+    enable_raw_mode()?;
+    crossterm::execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
+    let backend = CrosstermBackend::new(stdout);
+    let mut term = Terminal::new(backend)?;
+
+    let mut textarea = TextArea::default();
+    textarea.set_block(
+        Block::default()
+            .borders(Borders::ALL)
+            .title("Crossterm Minimal Example"),
+    );
+
     loop {
-        terminal.draw(render)?;
-        if matches!(event::read()?, Event::Key(_)) {
-            break Ok(());
+        term.draw(|f| {
+            f.render_widget(&textarea, f.area());
+        })?;
+
+        match ratatui::crossterm::event::read()?.into() {
+            Input { key: Key::Esc, .. } => break,
+            input => {
+                textarea.input(input);
+            }
         }
     }
+
+    disable_raw_mode()?;
+    crossterm::execute!(
+        term.backend_mut(),
+        LeaveAlternateScreen,
+        DisableMouseCapture
+    )?;
+    term.show_cursor()?;
+
+    println!("Lines: {:?}", textarea.lines());
+    Ok(())
 }
 
-fn render(frame: &mut Frame) {
-    frame.render_widget("hello world", frame.area());
-}
