@@ -4,6 +4,7 @@ use crossterm::terminal::{
 };
 use ratatui::Terminal;
 use ratatui::backend::CrosstermBackend;
+use ratatui::layout::{Constraint, Direction, Layout};
 use ratatui::widgets::{Block, Borders};
 use std::io;
 use tui_textarea::{Input, Key, TextArea};
@@ -26,7 +27,18 @@ fn main() -> io::Result<()> {
 
     loop {
         term.draw(|f| {
-            f.render_widget(&textarea, f.area());
+            let chunks = Layout::default()
+                .direction(Direction::Horizontal)
+                .constraints([
+                    Constraint::Max(10),
+                    Constraint::Fill(1),
+                    Constraint::Max(10),
+                ])
+                .split(f.area());
+
+            f.render_widget(&textarea, chunks[0]);
+            f.render_widget(&textarea, chunks[1]);
+            f.render_widget(&textarea, chunks[2]);
         })?;
 
         match ratatui::crossterm::event::read()?.into() {
@@ -48,4 +60,3 @@ fn main() -> io::Result<()> {
     println!("Lines: {:?}", textarea.lines());
     Ok(())
 }
-
