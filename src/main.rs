@@ -29,20 +29,23 @@ fn main() -> io::Result<()> {
         term.draw(|f| {
             let chunks = Layout::default()
                 .direction(Direction::Horizontal)
-                .constraints([
-                    Constraint::Max(10),
-                    Constraint::Fill(1),
-                    Constraint::Max(10),
-                ])
+                .constraints([Constraint::Percentage(20), Constraint::Fill(1)])
                 .split(f.area());
 
-            f.render_widget(&textarea, chunks[0]);
-            f.render_widget(&textarea, chunks[1]);
-            f.render_widget(&textarea, chunks[2]);
+            let sidebar = Layout::default()
+                .direction(Direction::Vertical)
+                .constraints([Constraint::Length(3), Constraint::Fill(1)])
+                .split(chunks[0]);
+
+            f.render_widget(&textarea, sidebar[0]);
+            f.render_widget(&textarea, sidebar[1]);
         })?;
 
         match ratatui::crossterm::event::read()?.into() {
             Input { key: Key::Esc, .. } => break,
+            Input {
+                key: Key::Enter, ..
+            } => (),
             input => {
                 textarea.input(input);
             }
